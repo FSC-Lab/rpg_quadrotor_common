@@ -2,8 +2,7 @@
 
 #include <Eigen/Dense>
 
-namespace quadrotor_common
-{
+namespace quadrotor_common {
 
 Eigen::Vector3d quaternionRatesToBodyRates(
     const Eigen::Quaterniond& q2, const Eigen::Quaterniond& q1, const double dt,
@@ -16,4 +15,4 @@ Eigen::Quaterniond integrateQuaternion(const Eigen::Quaterniond& q_start,
                                        const double dt);
 double sinc(const double a);
 
-} //quadrotor_common
+}  // namespace quadrotor_common

@@ -2,62 +2,57 @@
 
 #include "quadrotor_common/geometry_eigen_conversions.h"
 
-namespace quadrotor_common
-{
+namespace quadrotor_common {
 
-ControlCommand::ControlCommand() :
-    control_mode(ControlMode::NONE), armed(false), timestamp(ros::Time::now()),
-        expected_execution_time(timestamp),
-        orientation(Eigen::Quaterniond::Identity()), bodyrates(
-        Eigen::Vector3d::Zero()), angular_accelerations(
-        Eigen::Vector3d::Zero()), collective_thrust(0.0), rotor_thrusts()
-{
-}
+ControlCommand::ControlCommand()
+    : control_mode(ControlMode::NONE),
+      armed(false),
+      timestamp(ros::Time::now()),
+      expected_execution_time(timestamp),
+      orientation(Eigen::Quaterniond::Identity()),
+      bodyrates(Eigen::Vector3d::Zero()),
+      angular_accelerations(Eigen::Vector3d::Zero()),
+      collective_thrust(0.0),
+      rotor_thrusts() {}
 
 ControlCommand::ControlCommand(
-    const quadrotor_msgs::ControlCommand& control_command_msg)
-{
+    const quadrotor_msgs::ControlCommand& control_command_msg) {
   timestamp = control_command_msg.header.stamp;
-  switch (control_command_msg.control_mode)
-  {
-  case quadrotor_msgs::ControlCommand::NONE:
-    control_mode = ControlMode::NONE;
-    break;
-  case quadrotor_msgs::ControlCommand::ATTITUDE:
-    control_mode = ControlMode::ATTITUDE;
-    break;
-  case quadrotor_msgs::ControlCommand::BODY_RATES:
-    control_mode = ControlMode::BODY_RATES;
-    break;
-  case quadrotor_msgs::ControlCommand::ANGULAR_ACCELERATIONS:
-    control_mode = ControlMode::ANGULAR_ACCELERATIONS;
-    break;
-  case quadrotor_msgs::ControlCommand::ROTOR_THRUSTS:
-    control_mode = ControlMode::ROTOR_THRUSTS;
-    break;
-  default:
-    break;
+  switch (control_command_msg.control_mode) {
+    case quadrotor_msgs::ControlCommand::NONE:
+      control_mode = ControlMode::NONE;
+      break;
+    case quadrotor_msgs::ControlCommand::ATTITUDE:
+      control_mode = ControlMode::ATTITUDE;
+      break;
+    case quadrotor_msgs::ControlCommand::BODY_RATES:
+      control_mode = ControlMode::BODY_RATES;
+      break;
+    case quadrotor_msgs::ControlCommand::ANGULAR_ACCELERATIONS:
+      control_mode = ControlMode::ANGULAR_ACCELERATIONS;
+      break;
+    case quadrotor_msgs::ControlCommand::ROTOR_THRUSTS:
+      control_mode = ControlMode::ROTOR_THRUSTS;
+      break;
+    default:
+      break;
   }
   armed = control_command_msg.armed;
   expected_execution_time = control_command_msg.expected_execution_time;
   orientation = geometryToEigen(control_command_msg.orientation);
   bodyrates = geometryToEigen(control_command_msg.bodyrates);
-  angular_accelerations = geometryToEigen(
-      control_command_msg.angular_accelerations);
+  angular_accelerations =
+      geometryToEigen(control_command_msg.angular_accelerations);
   collective_thrust = control_command_msg.collective_thrust;
   rotor_thrusts.resize(control_command_msg.rotor_thrusts.size());
-  for (int i = 0; i < control_command_msg.rotor_thrusts.size(); i++)
-  {
+  for (int i = 0; i < control_command_msg.rotor_thrusts.size(); i++) {
     rotor_thrusts(i) = control_command_msg.rotor_thrusts[i];
   }
 }
 
-ControlCommand::~ControlCommand()
-{
-}
+ControlCommand::~ControlCommand() {}
 
-void ControlCommand::zero()
-{
+void ControlCommand::zero() {
   timestamp = ros::Time::now();
   control_mode = ControlMode::BODY_RATES;
   armed = false;
@@ -69,14 +64,12 @@ void ControlCommand::zero()
   rotor_thrusts = Eigen::VectorXd::Zero(rotor_thrusts.size());
 }
 
-quadrotor_msgs::ControlCommand ControlCommand::toRosMessage() const
-{
+quadrotor_msgs::ControlCommand ControlCommand::toRosMessage() const {
   quadrotor_msgs::ControlCommand ros_msg;
 
   ros_msg.header.stamp = timestamp;
 
-  switch (control_mode)
-  {
+  switch (control_mode) {
     case ControlMode::NONE:
       ros_msg.control_mode = ros_msg.NONE;
       break;
@@ -99,12 +92,11 @@ quadrotor_msgs::ControlCommand ControlCommand::toRosMessage() const
   ros_msg.bodyrates = eigenToGeometry(bodyrates);
   ros_msg.angular_accelerations = eigenToGeometry(angular_accelerations);
   ros_msg.collective_thrust = collective_thrust;
-  for (int i = 0; i < rotor_thrusts.size(); i++)
-  {
+  for (int i = 0; i < rotor_thrusts.size(); i++) {
     ros_msg.rotor_thrusts.push_back(rotor_thrusts(i));
   }
 
   return ros_msg;
 }
 
-} // namespace quadrotor_common
+}  // namespace quadrotor_common

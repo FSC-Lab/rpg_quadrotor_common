@@ -4,8 +4,7 @@
 
 #include "quadrotor_common/trajectory_point.h"
 
-namespace quadrotor_common
-{
+namespace quadrotor_common {
 
 double fcToAlpha(const double fc, const double dt);
 double lowpass(const double filterin, const double input, const double alpha);
@@ -45,7 +44,7 @@ double wrapMinusPiToPi(const double angle);
 double wrapAngleDifference(const double current_angle,
                            const double desired_angle);
 
-void limit(double *val, const double min, const double max);
+void limit(double* val, const double min, const double max);
 
 Eigen::Matrix3d skew(const Eigen::Vector3d& v);
 
@@ -61,5 +60,4 @@ Eigen::Matrix3d eulerAnglesZYXToRotationMatrix(
 Eigen::Matrix3d quaternionToRotationMatrix(const Eigen::Quaterniond& q);
 Eigen::Quaterniond RotationMatrixToQuaternion(const Eigen::Matrix3d& R);
 
-} // quadrotor_common
-
+}  // namespace quadrotor_common

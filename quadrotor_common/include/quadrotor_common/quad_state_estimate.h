@@ -1,14 +1,13 @@
 #pragma once
 
-#include <Eigen/Dense>
 #include <nav_msgs/Odometry.h>
 #include <ros/time.h>
 
-namespace quadrotor_common
-{
+#include <Eigen/Dense>
 
-struct QuadStateEstimate
-{
+namespace quadrotor_common {
+
+struct QuadStateEstimate {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
   QuadStateEstimate();
@@ -20,14 +19,17 @@ struct QuadStateEstimate
   bool isValid() const;
 
   ros::Time timestamp;
-  enum class CoordinateFrame
-  {
-    INVALID, WORLD, OPTITRACK, VISION, LOCAL
+  enum class CoordinateFrame {
+    INVALID,
+    WORLD,
+    OPTITRACK,
+    VISION,
+    LOCAL
   } coordinate_frame;
   Eigen::Vector3d position;
   Eigen::Vector3d velocity;
   Eigen::Quaterniond orientation;
-  Eigen::Vector3d bodyrates; // Body rates are represented in body coordinates
+  Eigen::Vector3d bodyrates;  // Body rates are represented in body coordinates
 };
 
-} // namespace quadrotor_common
+}  // namespace quadrotor_common

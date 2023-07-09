@@ -1,18 +1,16 @@
 #pragma once
 
-#include <list>
-
-#include <quadrotor_msgs/Trajectory.h>
 #include <nav_msgs/Path.h>
+#include <quadrotor_msgs/Trajectory.h>
 #include <ros/time.h>
+
+#include <list>
 
 #include "quadrotor_common/trajectory_point.h"
 
-namespace quadrotor_common
-{
+namespace quadrotor_common {
 
-struct Trajectory
-{
+struct Trajectory {
   Trajectory();
   Trajectory(const quadrotor_msgs::Trajectory& trajectory_msg);
   Trajectory(const quadrotor_common::TrajectoryPoint& point);
@@ -21,16 +19,19 @@ struct Trajectory
   quadrotor_msgs::Trajectory toRosMessage() const;
   nav_msgs::Path toRosPath() const;
   quadrotor_common::TrajectoryPoint getStateAtTime(
-    const ros::Duration& time_from_start) const;
+      const ros::Duration& time_from_start) const;
 
   ros::Time timestamp;
 
-  enum class TrajectoryType
-  {
-    UNDEFINED, GENERAL, ACCELERATION, JERK, SNAP
+  enum class TrajectoryType {
+    UNDEFINED,
+    GENERAL,
+    ACCELERATION,
+    JERK,
+    SNAP
   } trajectory_type;
 
   std::list<quadrotor_common::TrajectoryPoint> points;
 };
 
-} // namespace quadrotor_common
+}  // namespace quadrotor_common

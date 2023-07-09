@@ -1,23 +1,19 @@
 #pragma once
 
-#include <Eigen/Dense>
-#include <quadrotor_common/quad_state_estimate.h>
 #include <quadrotor_common/control_command.h>
+#include <quadrotor_common/quad_state_estimate.h>
 #include <ros/ros.h>
+
+#include <Eigen/Dense>
 
 #include "state_predictor/quad_ext_state_estimate.h"
 
-namespace state_predictor
-{
+namespace state_predictor {
 
-class StatePredictor
-{
-public:
+class StatePredictor {
+ public:
   StatePredictor(const ros::NodeHandle& nh, const ros::NodeHandle& pnh);
-  StatePredictor() :
-      StatePredictor(ros::NodeHandle(), ros::NodeHandle("~"))
-  {
-  }
+  StatePredictor() : StatePredictor(ros::NodeHandle(), ros::NodeHandle("~")) {}
   ~StatePredictor();
 
   void initialize(const quadrotor_common::QuadStateEstimate& state_estimate);
@@ -28,7 +24,7 @@ public:
 
   void pushCommandToQueue(const quadrotor_common::ControlCommand& cmd);
 
-private:
+ private:
   QuadExtStateEstimate predictExtendedState(const ros::Time& time) const;
   QuadExtStateEstimate predictWithCommand(
       const QuadExtStateEstimate& old_state,
@@ -67,5 +63,4 @@ private:
   double tau_body_rates_dynamics_;
 };
 
-} // namespace state_predictor
-
+}  // namespace state_predictor

@@ -1,14 +1,13 @@
 #pragma once
 
-#include <Eigen/Dense>
 #include <quadrotor_msgs/TrajectoryPoint.h>
 #include <ros/duration.h>
 
-namespace quadrotor_common
-{
+#include <Eigen/Dense>
 
-struct TrajectoryPoint
-{
+namespace quadrotor_common {
+
+struct TrajectoryPoint {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
   TrajectoryPoint();
@@ -41,4 +40,4 @@ struct TrajectoryPoint
   double heading_acceleration;
 };
 
-} // namespace quadrotor_common
+}  // namespace quadrotor_common

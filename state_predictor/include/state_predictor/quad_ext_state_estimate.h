@@ -2,11 +2,9 @@
 
 #include <quadrotor_common/quad_state_estimate.h>
 
-namespace state_predictor
-{
+namespace state_predictor {
 
-struct QuadExtStateEstimate : quadrotor_common::QuadStateEstimate
-{
+struct QuadExtStateEstimate : quadrotor_common::QuadStateEstimate {
   QuadExtStateEstimate();
   QuadExtStateEstimate(const nav_msgs::Odometry& quad_state_est);
   QuadExtStateEstimate(
@@ -21,4 +19,4 @@ struct QuadExtStateEstimate : quadrotor_common::QuadStateEstimate
   static constexpr double kDefaultThrust = 0.0;
 };
 
-} // namespace state_predictor
+}  // namespace state_predictor

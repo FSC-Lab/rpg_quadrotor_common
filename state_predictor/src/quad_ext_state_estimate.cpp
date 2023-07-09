@@ -1,22 +1,17 @@
 #include "state_predictor/quad_ext_state_estimate.h"
 
-namespace state_predictor
-{
+namespace state_predictor {
 
-QuadExtStateEstimate::QuadExtStateEstimate() :
-    quadrotor_common::QuadStateEstimate(), thrust(kDefaultThrust)
-{
-}
+QuadExtStateEstimate::QuadExtStateEstimate()
+    : quadrotor_common::QuadStateEstimate(), thrust(kDefaultThrust) {}
 
 QuadExtStateEstimate::QuadExtStateEstimate(
-    const nav_msgs::Odometry& quad_state_est) :
-    quadrotor_common::QuadStateEstimate(quad_state_est), thrust(kDefaultThrust)
-{
-}
+    const nav_msgs::Odometry& quad_state_est)
+    : quadrotor_common::QuadStateEstimate(quad_state_est),
+      thrust(kDefaultThrust) {}
 
 QuadExtStateEstimate::QuadExtStateEstimate(
-    const quadrotor_common::QuadStateEstimate& quad_state_est)
-{
+    const quadrotor_common::QuadStateEstimate& quad_state_est) {
   timestamp = quad_state_est.timestamp;
   coordinate_frame = quad_state_est.coordinate_frame;
   position = quad_state_est.position;
@@ -26,12 +21,10 @@ QuadExtStateEstimate::QuadExtStateEstimate(
   thrust = kDefaultThrust;
 }
 
-QuadExtStateEstimate::~QuadExtStateEstimate()
-{
-}
+QuadExtStateEstimate::~QuadExtStateEstimate() {}
 
-quadrotor_common::QuadStateEstimate QuadExtStateEstimate::getQuadStateEstimate()
-{
+quadrotor_common::QuadStateEstimate
+QuadExtStateEstimate::getQuadStateEstimate() {
   quadrotor_common::QuadStateEstimate quad_state_est;
   quad_state_est.timestamp = timestamp;
   quad_state_est.coordinate_frame = coordinate_frame;
@@ -43,4 +36,4 @@ quadrotor_common::QuadStateEstimate QuadExtStateEstimate::getQuadStateEstimate()
   return quad_state_est;
 }
 
-} // namespace state_predictor
+}  // namespace state_predictor
