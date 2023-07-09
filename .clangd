@@ -1,0 +1,15 @@
+If:
+  PathMatch: "(.*/)?quadrotor_common/.*"
+CompileFlags:
+  CompilationDatabase: ../../build/quadrotor_common
+---
+If:
+  PathMatch: "(.*/)?quadrotor_msgs/.*"
+CompileFlags:
+  CompilationDatabase: ../../build/quadrotor_msgs
+
+---
+If:
+  PathMatch: "(.*/)?state_predictor/.*"
+CompileFlags:
+  CompilationDatabase: ../../build/state_predictor
