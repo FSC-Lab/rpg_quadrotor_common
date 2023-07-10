@@ -5,8 +5,15 @@ project(quadrotor_msgs)
 add_compile_options(-std=c++11)
 add_compile_options(-O3)
 
-find_package(catkin_simple REQUIRED)
-catkin_simple(ALL_DEPS_REQUIRED)
+find_package(catkin REQUIRED COMPONENTS geometry_msgs message_generation
+                                        nav_msgs std_msgs)
+file(
+  GLOB_RECURSE MSG_FILES
+  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/msg"
+  "*.msg")
 
-cs_install()
-cs_export()
+add_message_files(FILES ${MSG_FILES})
+
+generate_messages(DEPENDENCIES geometry_msgs nav_msgs std_msgs)
+
+catkin_package()

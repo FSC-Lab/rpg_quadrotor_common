@@ -5,10 +5,24 @@ project(quadrotor_common)
 add_compile_options(-std=c++11)
 add_compile_options(-O3)
 
-find_package(catkin_simple REQUIRED)
-catkin_simple(ALL_DEPS_REQUIRED)
+find_package(Eigen3 REQUIRED)
+find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs nav_msgs
+                                        quadrotor_msgs)
 
-cs_add_library(
+catkin_package(
+  INCLUDE_DIRS
+  include
+  LIBRARIES
+  ${PROJECT_NAME}
+  CATKIN_DEPENDS
+  roscpp
+  geometry_msgs
+  nav_msgs
+  quadrotor_msgs
+  DEPENDS
+  Eigen3)
+
+add_library(
   ${PROJECT_NAME}
   src/control_command.cpp
   src/geometry_eigen_conversions.cpp
@@ -18,6 +32,6 @@ cs_add_library(
   src/quaternion_functions.cpp
   src/trajectory_point.cpp
   src/trajectory.cpp)
-
-cs_install()
-cs_export()
+target_include_directories(${PROJECT_NAME} PUBLIC include
+                                                  ${catkin_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PUBLIC Eigen3::Eigen ${catkin_LIBRARIES})

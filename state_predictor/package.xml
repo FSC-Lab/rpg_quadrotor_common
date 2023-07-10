@@ -12,12 +12,11 @@
   <author>Davide Falanga</author>
 
   <buildtool_depend>catkin</buildtool_depend>
-  <buildtool_depend>catkin_simple</buildtool_depend>
 
   <depend>quadrotor_common</depend>
   <depend>roscpp</depend>
 
   <export>
-    
+
   </export>
 </package>
